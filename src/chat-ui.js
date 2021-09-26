@@ -1,5 +1,5 @@
-import ChatClient from './chat-client.js';
 import BotUI from 'botui';
+import ChatClient from './chat-client.js';
 
 
 /**
@@ -122,8 +122,11 @@ export default class ChatUI {
 
 
                 if (this.opts.methods && this.opts.methods.onServerProcess) {
-                    const serverResponse = this.opts.methods.onServerProcess(userInput.value);
-                    this.handleChatServerResponse(serverResponse, loadingIconMsgIdx);
+                    this.opts.methods.onServerProcess(userInput.value)
+                        .then(serverResponse => {
+                            this.handleChatServerResponse(serverResponse, loadingIconMsgIdx);
+                        }
+                    );
                 } else {
 
                     if (!this.chatClient.params) {
